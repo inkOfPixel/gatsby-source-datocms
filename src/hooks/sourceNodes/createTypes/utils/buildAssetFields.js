@@ -65,7 +65,7 @@ module.exports = function() {
       type: 'DatoCmsAssetVideo',
       resolve: upload => {
         if (upload.entityPayload.attributes.mux_playback_id) {
-          return upload;
+          return camelizeKeys(upload.entityPayload.attributes);
         }
 
         return null;
