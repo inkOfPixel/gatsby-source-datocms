@@ -7,4 +7,5 @@
 /node_modules
 /utils.js
 /test/fixtures/sample-gatsby-structure/.cache
-/test/public
+/test/fixtures/sample-gatsby-structure/node_modules
+/test/fixtures/sample-gatsby-structure/public

@@ -1,4 +1,4 @@
-const { camelize } = require('humps');
+const { camelize, camelizeKeys } = require('datocms-client');
 
 module.exports = ({
   parentItemType,
@@ -20,13 +20,13 @@ module.exports = ({
         }
 
         const upload = context.nodeModel.getNodeById({ id: fileObject.uploadId___NODE });
-        const defaults = upload.defaultFieldMetadata[fileObject.locale];
+        const defaults = upload.entityPayload.attributes.default_field_metadata[fileObject.locale];
 
         return {
           ...upload,
           alt: fileObject.alt || defaults.alt,
           title: fileObject.title || defaults.title,
-          customData: { ...defaults.customData, ...fileObject.customData },
+          customData: { ...camelizeKeys(defaults.customData), ...fileObject.customData },
         };
       },
     },

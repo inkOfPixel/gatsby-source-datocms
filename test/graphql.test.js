@@ -1,5 +1,4 @@
 const { suite } = require('uvu');
-const assert = require('uvu/assert');
 const buildQueryExecutor = require('./support/buildQueryExecutor');
 const assertGraphQLResponseEqualToSnapshot = require('./support/assertGraphQLResponseEqualToSnapshot');
 
@@ -11,8 +10,7 @@ GraphQL.before(async () => {
   executeQuery = await buildQueryExecutor();
 });
 
-GraphQL('assets', async () => {
-  const assetFields = `
+const assetFields = `
     size width height path format isImage notes author copyright tags
     smartTags filename basename exifInfo mimeType blurhash
     originalId url createdAt
@@ -33,9 +31,287 @@ GraphQL('assets', async () => {
     fluid(maxWidth: 300, imgixParams: {fm: "auto"}) { base64 aspectRatio width height src srcSet sizes }
   `;
 
-  assertGraphQLResponseEqualToSnapshot('png-asset', await executeQuery(`{ datoCmsAsset(originalId: {eq: "2637142"}) { ${assetFields} } }`));
-  assertGraphQLResponseEqualToSnapshot('mp4-asset', await executeQuery(`{ datoCmsAsset(originalId: {eq: "2637250"}) { ${assetFields} } }`));
-  assertGraphQLResponseEqualToSnapshot('csv-asset', await executeQuery(`{ datoCmsAsset(originalId: {eq: "2637251"}) { ${assetFields} } }`));
+const fileFields = `alt title customData ${assetFields}`
+
+GraphQL('assets', async () => {
+  assertGraphQLResponseEqualToSnapshot(
+    'png-asset',
+    await executeQuery(
+      `{ datoCmsAsset(originalId: {eq: "2637142"}) { ${assetFields} } }`,
+    ),
+  );
+  assertGraphQLResponseEqualToSnapshot(
+    'mp4-asset',
+    await executeQuery(
+      `{ datoCmsAsset(originalId: {eq: "2637250"}) { ${assetFields} } }`,
+    ),
+  );
+  assertGraphQLResponseEqualToSnapshot(
+    'csv-asset',
+    await executeQuery(
+      `{ datoCmsAsset(originalId: {eq: "2637251"}) { ${assetFields} } }`,
+    ),
+  );
+});
+
+GraphQL('items', async () => {
+  const query = `
+    {
+      enArticle: datoCmsArticle(originalId: {eq: "7364344"}, locale: {eq: "en"}) {
+        __typename
+        locale
+        originalId
+        id
+        singleLineString
+        _allSingleLineStringLocales {
+          locale
+          value
+        }
+        multipleParagraphText
+        _allMultipleParagraphTextLocales {
+          locale
+          value
+        }
+        multipleParagraphTextNode {
+          id
+          internal {
+            content
+          }
+        }
+        singleAsset {
+          ${fileFields}
+        }
+        _allSingleAssetLocales {
+          locale
+          value {
+            ${fileFields}
+          }
+        }
+        assetGallery {
+          ${fileFields}
+        }
+        _allAssetGalleryLocales {
+          locale
+          value {
+            ${fileFields}
+          }
+        }
+        externalVideo {
+          __typename
+          url
+          title
+          provider
+          providerUid
+          thumbnailUrl
+          width
+          height
+        }
+        _allExternalVideoLocales {
+          locale
+          value {
+            __typename
+            url
+            title
+            provider
+            providerUid
+            thumbnailUrl
+            width
+            height
+          }
+        }
+        date(formatString: "YYYY MMMM DD")
+        _allDateLocales {
+          locale
+          value
+        }
+        dateTime(formatString: "YYYY MMMM DD @ HH:mm")
+        _allDateTimeLocales {
+          locale
+          value
+        }
+        integerNumber
+        _allIntegerNumberLocales {
+          locale
+          value
+        }
+        floatingPointNumber
+        _allFloatingPointNumberLocales {
+          locale
+          value
+        }
+        boolean
+        _allBooleanLocales {
+          locale
+          value
+        }
+        location {
+          latitude
+          longitude
+        }
+        _allLocationLocales {
+          locale
+          value {
+            __typename
+            latitude
+            longitude
+          }
+        }
+        color {
+          red
+          green
+          blue
+          alpha
+          rgb
+          hex
+        }
+        _allColorLocales {
+          locale
+          value {
+            red
+            green
+            blue
+            alpha
+            rgb
+            hex
+          }
+        }
+        slug
+        _allSlugLocales {
+          locale
+          value
+        }
+        seo {
+          title
+          description
+          twitterCard
+          image {
+            path
+          }
+        }
+        _allSeoLocales {
+          locale
+          value {
+            title
+            description
+            twitterCard
+            image {
+              path
+            }
+          }
+        }
+        singleLink {
+          id
+          singleLineString
+        }
+        _allSingleLinkLocales {
+          locale
+          value {
+            id
+            singleLineString
+          }
+        }
+        advancedSingleLink {
+          __typename
+          ... on DatoCmsArticle {
+            singleLineString
+          }
+          ... on DatoCmsSecondaryModel {
+            title
+          }
+        }
+        _allAdvancedSingleLinkLocales {
+          locale
+          value {
+            __typename
+            ... on DatoCmsArticle {
+              singleLineString
+            }
+            ... on DatoCmsSecondaryModel {
+              title
+            }
+          }
+        }
+        multipleLinks {
+          id
+          singleLineString
+        }
+        _allMultipleLinksLocales {
+          locale
+          value {
+            id
+            singleLineString
+          }
+        }
+        advancedMultipleLinks {
+          __typename
+          ... on DatoCmsArticle {
+            singleLineString
+          }
+          ... on DatoCmsSecondaryModel {
+            title
+          }
+        }
+        _allAdvancedMultipleLinksLocales {
+          locale
+          value {
+            __typename
+            ... on DatoCmsArticle {
+              singleLineString
+            }
+            ... on DatoCmsSecondaryModel {
+              title
+            }
+          }
+        }
+        json
+        _allJsonLocales {
+          locale
+          value
+        }
+        modularContent {
+          title
+          originalId
+        }
+        _allModularContentLocales {
+          locale
+          value {
+            title
+            originalId
+          }
+        }
+        meta {
+          createdAt
+          updatedAt
+          status
+          isValid
+          publishedAt
+          __typename
+        }
+        seoMetaTags {
+          __typename
+          tags
+          id
+        }
+        model {
+          id
+          name
+          singleton
+          sortable
+          apiKey
+          orderingDirection
+          tree
+          modularBlock
+          draftModeActive
+          allLocalesRequired
+          collectionAppeareance
+          hasSingletonItem
+          originalId
+        }
+      }
+    }
+  `;
+
+  assertGraphQLResponseEqualToSnapshot('item', await executeQuery(query));
 });
 
 GraphQL.run();
