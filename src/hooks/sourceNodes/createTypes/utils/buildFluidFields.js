@@ -14,7 +14,9 @@ module.exports = () => {
       sizes: 'String',
       imgixParams: 'DatoCmsImgixParams'
     },
-    resolve: (image, { maxWidth, maxHeight, imgixParams = {}, sizes }) => {
+    resolve: (node, { maxWidth, maxHeight, imgixParams = {}, sizes }) => {
+      const image = node.entityPayload.attributes;
+
       if (!isImage(image)) {
         return null;
       }
