@@ -1,10 +1,17 @@
+const { camelizeKeys } = require('datocms-client');
 const buildFluidFields = require('../utils/buildFluidFields');
 const buildFixedFields = require('../utils/buildFixedFields');
 
-const resolveUsingEntityPayloadAttribute = (key, definition) => ({
+const resolveUsingEntityPayloadAttribute = (
+  key,
+  definition,
+  camelize = false,
+) => ({
   ...definition,
   resolve: node => {
-    return node.entityPayload.attributes[key]
+    return camelize
+      ? camelizeKeys(node.entityPayload.attributes[key])
+      : node.entityPayload.attributes[key];
   },
 });
 
@@ -15,14 +22,16 @@ module.exports = function() {
     height: resolveUsingEntityPayloadAttribute('height', { type: 'Int' }),
     path: resolveUsingEntityPayloadAttribute('path', { type: 'String' }),
     format: resolveUsingEntityPayloadAttribute('format', { type: 'String' }),
-    isImage: resolveUsingEntityPayloadAttribute('isImage', { type: 'Boolean' }),
+    isImage: resolveUsingEntityPayloadAttribute('is_image', {
+      type: 'Boolean',
+    }),
     notes: resolveUsingEntityPayloadAttribute('notes', { type: 'String' }),
     author: resolveUsingEntityPayloadAttribute('author', { type: 'String' }),
     copyright: resolveUsingEntityPayloadAttribute('copyright', {
       type: 'String',
     }),
     tags: resolveUsingEntityPayloadAttribute('tags', { type: '[String]' }),
-    smartTags: resolveUsingEntityPayloadAttribute('smartTags', {
+    smartTags: resolveUsingEntityPayloadAttribute('smart_tags', {
       type: '[String]',
     }),
     filename: resolveUsingEntityPayloadAttribute('filename', {
@@ -31,8 +40,8 @@ module.exports = function() {
     basename: resolveUsingEntityPayloadAttribute('basename', {
       type: 'String',
     }),
-    exifInfo: resolveUsingEntityPayloadAttribute('exifInfo', { type: 'JSON' }),
-    mimeType: resolveUsingEntityPayloadAttribute('mimeType', {
+    exifInfo: resolveUsingEntityPayloadAttribute('exif_info', { type: 'JSON' }, true),
+    mimeType: resolveUsingEntityPayloadAttribute('mime_type', {
       type: 'String',
     }),
     colors: resolveUsingEntityPayloadAttribute('colors', {
@@ -48,14 +57,14 @@ module.exports = function() {
         return `${node.imgixHost}${node.entityPayload.attributes.path}`;
       },
     },
-    createdAt: resolveUsingEntityPayloadAttribute('createdAt', {
+    createdAt: resolveUsingEntityPayloadAttribute('created_at', {
       type: 'Date',
       extensions: { dateformat: {} },
     }),
     video: {
       type: 'DatoCmsAssetVideo',
       resolve: upload => {
-        if (upload.entityPayload.attributes.muxPlaybackId) {
+        if (upload.entityPayload.attributes.mux_playback_id) {
           return upload;
         }
 

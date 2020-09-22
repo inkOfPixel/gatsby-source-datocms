@@ -1,0 +1,10 @@
+{
+  "version": "v1",
+  "packages": {
+    "datocms-client": {
+      "signature": "c460a66f9ab224768d6d1ec80ca582fd",
+      "file": true,
+      "replaced": ">=3.0.45"
+    }
+  }
+}
