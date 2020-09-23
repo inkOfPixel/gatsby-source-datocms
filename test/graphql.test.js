@@ -56,16 +56,6 @@ GraphQL('assets', async () => {
 });
 
 GraphQL('sortable collection', async () => {
-  console.log('------------------------');
-  console.log(
-    await executeQuery(`
-      {
-        datoCmsSecondaryModel(originalId: {eq: "7364459"}) {
-          position
-        }
-      }
-    `),
-  );
   assertGraphQLResponseEqualToSnapshot(
     'sortable-position',
     await executeQuery(`
@@ -82,35 +72,35 @@ GraphQL('tree collections', async () => {
   assertGraphQLResponseEqualToSnapshot(
     'tree',
     await executeQuery(`
-    {
-      allDatoCmsHierarchical(filter: {root: {eq: true}, locale: {eq: "en"}}) {
-        nodes {
-          id
-          title
-          position
-          treeChildren {
+      {
+        allDatoCmsHierarchical(filter: {root: {eq: true}, locale: {eq: "en"}}) {
+          nodes {
             id
             title
             position
-            treeParent {
-              id
-              title
-            }
             treeChildren {
               id
               title
               position
+              treeParent {
+                id
+                title
+              }
               treeChildren {
                 id
                 title
                 position
+                treeChildren {
+                  id
+                  title
+                  position
+                }
               }
             }
           }
         }
       }
-    }
-  `),
+    `),
   );
 });
 

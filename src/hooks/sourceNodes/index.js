@@ -177,13 +177,9 @@ module.exports = async (
     destroyEntityNode(entity, context);
   });
 
-  console.log('CARICO -------------');
-
   await loader.load();
   // finalizeNodesCreation(context);
-
-  console.log('FINITO -------------');
-
+  
   activity.end();
 
   const queue = new Queue(1, Infinity);

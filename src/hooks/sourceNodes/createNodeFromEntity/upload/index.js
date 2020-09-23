@@ -5,6 +5,7 @@ module.exports = function buildUploadNode(entity, { entitiesRepo }) {
   const imgixHost = `https://${siteEntity.imgixHost}`;
 
   return buildNode('DatoCmsAsset', entity.id, node => {
+    console.log(node.id);
     node.entityPayload = entity.payload;
     node.imgixHost = imgixHost;
     node.digest = entity.path + entity.updatedAt;

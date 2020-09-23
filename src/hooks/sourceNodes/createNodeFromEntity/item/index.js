@@ -1,12 +1,8 @@
 const { pascalize } = require('humps');
 const { camelize } = require('datocms-client');
 const { localizedRead } = require('datocms-client');
-const entries = require('object.entries');
 
 const buildNode = require('../utils/buildNode');
-const buildSeoMetaTagsNode = require('./buildSeoMetaTagsNode');
-const itemNodeId = require('./itemNodeId');
-const addField = require('./addField');
 
 module.exports = function buildItemNode(
   entity,
@@ -25,7 +21,6 @@ module.exports = function buildItemNode(
         `${entity.id}-${locale}`,
         node => {
           node.locale = locale;
-          node.model___NODE = `DatoCmsModel-${entity.itemType.id}`;
           node.entityPayload = entity.payload;
           node.digest = entity.meta.updatedAt;
 
@@ -60,13 +55,11 @@ module.exports = function buildItemNode(
               );
 
               additionalNodesToCreate.push(textNode);
-
-              node[`${camelizedApiKey}Node___NODE`] = textNode.id;
             });
 
           const seoNode = buildNode('DatoCmsSeoMetaTags', node.id, node => {
-            // node.tags = seoTagsBuilder(itemEntity, entitiesRepo, i18n);
             node.digest = entity.meta.updatedAt;
+            node.itemNodeId = `DatoCms${type}-${entity.id}-${locale}`;
             node.locale = locale;
           });
 
