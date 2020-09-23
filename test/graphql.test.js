@@ -8,6 +8,7 @@ let executeQuery;
 
 GraphQL.before(async () => {
   executeQuery = await buildQueryExecutor();
+  console.log('FATTO');
 });
 
 const assetFields = `
@@ -31,7 +32,7 @@ const assetFields = `
     fluid(maxWidth: 300, imgixParams: {fm: "auto"}) { base64 aspectRatio width height src srcSet sizes }
   `;
 
-const fileFields = `alt title customData ${assetFields}`
+const fileFields = `alt title customData ${assetFields}`;
 
 GraphQL('assets', async () => {
   assertGraphQLResponseEqualToSnapshot(
@@ -51,6 +52,65 @@ GraphQL('assets', async () => {
     await executeQuery(
       `{ datoCmsAsset(originalId: {eq: "2637251"}) { ${assetFields} } }`,
     ),
+  );
+});
+
+GraphQL('sortable collection', async () => {
+  console.log('------------------------');
+  console.log(
+    await executeQuery(`
+      {
+        datoCmsSecondaryModel(originalId: {eq: "7364459"}) {
+          position
+        }
+      }
+    `),
+  );
+  assertGraphQLResponseEqualToSnapshot(
+    'sortable-position',
+    await executeQuery(`
+    {
+      datoCmsSecondaryModel(originalId: {eq: "7364459"}) {
+        position
+      }
+    }
+  `),
+  );
+});
+
+GraphQL('tree collections', async () => {
+  assertGraphQLResponseEqualToSnapshot(
+    'tree',
+    await executeQuery(`
+    {
+      allDatoCmsHierarchical(filter: {root: {eq: true}, locale: {eq: "en"}}) {
+        nodes {
+          id
+          title
+          position
+          treeChildren {
+            id
+            title
+            position
+            treeParent {
+              id
+              title
+            }
+            treeChildren {
+              id
+              title
+              position
+              treeChildren {
+                id
+                title
+                position
+              }
+            }
+          }
+        }
+      }
+    }
+  `),
   );
 });
 
