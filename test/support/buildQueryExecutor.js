@@ -22,6 +22,8 @@ module.exports = async function buildQueryExecutor() {
     },
   });
 
+  console.log('FINE BOOTSTRAP');
+
   const runner = new GraphQLRunner(redux.store, { graphqlTracing: false });
 
   return async query => {
