@@ -23,7 +23,9 @@ module.exports = ({
       type: gqlItemTypeName(linkedItemType),
       resolveForSimpleField: (fieldValue, context, node) => {
         if (fieldValue) {
-          return context.nodeModel.getNodeById({ id: itemNodeId(fieldValue, node.locale, entitiesRepo) });
+          return context.nodeModel.getNodeById({
+            id: itemNodeId(fieldValue, node.locale, entitiesRepo),
+          });
         }
       },
     };
@@ -37,11 +39,15 @@ module.exports = ({
   );
 
   return {
-    additionalTypesToCreate: [schema.buildUnionType({ name: unionType, types: unionTypes })],
+    additionalTypesToCreate: [
+      schema.buildUnionType({ name: unionType, types: unionTypes }),
+    ],
     type: unionType,
     resolveForSimpleField: (fieldValue, context, node) => {
       if (fieldValue) {
-        return context.nodeModel.getNodeById({ id: itemNodeId(fieldValue, node.locale, entitiesRepo) });
+        return context.nodeModel.getNodeById({
+          id: itemNodeId(fieldValue, node.locale, entitiesRepo),
+        });
       }
     },
   };

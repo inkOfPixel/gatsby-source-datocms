@@ -11,11 +11,13 @@ module.exports = ({ actions, schema }) => {
           type: 'DatoCmsAsset',
           resolve: (fieldValue, args, context) => {
             if (fieldValue && fieldValue.image) {
-              return context.nodeModel.getNodeById({ id: `DatoCmsAsset-${fieldValue.image}` });
+              return context.nodeModel.getNodeById({
+                id: `DatoCmsAsset-${fieldValue.image}`,
+              });
             }
-          }
+          },
         },
       },
     }),
   ]);
-}
+};

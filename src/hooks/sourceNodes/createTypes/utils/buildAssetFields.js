@@ -40,7 +40,11 @@ module.exports = function() {
     basename: resolveUsingEntityPayloadAttribute('basename', {
       type: 'String',
     }),
-    exifInfo: resolveUsingEntityPayloadAttribute('exif_info', { type: 'JSON' }, true),
+    exifInfo: resolveUsingEntityPayloadAttribute(
+      'exif_info',
+      { type: 'JSON' },
+      true,
+    ),
     mimeType: resolveUsingEntityPayloadAttribute('mime_type', {
       type: 'String',
     }),

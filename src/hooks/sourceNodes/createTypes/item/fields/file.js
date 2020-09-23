@@ -10,7 +10,7 @@ module.exports = () => ({
     const upload = context.nodeModel.getNodeById({
       id: `DatoCmsAsset-${fieldValue.upload_id}`,
     });
-    
+
     const uploadDefaultFieldMetadata =
       upload.entityPayload.attributes.default_field_metadata[node.locale];
 

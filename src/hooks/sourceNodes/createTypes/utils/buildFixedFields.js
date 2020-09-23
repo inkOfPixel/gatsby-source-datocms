@@ -12,7 +12,7 @@ module.exports = () => {
         defaultValue: 400,
       },
       height: 'Int',
-      imgixParams: 'DatoCmsImgixParams'
+      imgixParams: 'DatoCmsImgixParams',
     },
     resolve: (node, { width, height, imgixParams = {} }) => {
       const image = node.entityPayload.attributes;
@@ -67,4 +67,3 @@ module.exports = () => {
     resolutions: field,
   };
 };
-

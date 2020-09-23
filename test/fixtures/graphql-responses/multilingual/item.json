@@ -969,21 +969,15 @@
           ]
         }
       ],
-      "json": {
-        "foo": "english"
-      },
+      "json": "{\n  \"foo\": \"english\"\n}",
       "_allJsonLocales": [
         {
           "locale": "en",
-          "value": {
-            "foo": "english"
-          }
+          "value": "{\n  \"foo\": \"english\"\n}"
         },
         {
           "locale": "it",
-          "value": {
-            "foo": "italiano"
-          }
+          "value": "{\n  \"foo\": \"italiano\"\n}"
         }
       ],
       "modularContent": [

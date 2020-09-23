@@ -8,8 +8,7 @@
     "build": "babel src --out-dir . --ignore __tests__",
     "watch": "babel -w src --out-dir . --ignore __tests__",
     "prepublish": "cross-env NODE_ENV=production npm run build",
-    "test:clean": "rm -rf test/fixtures/sample-gatsby-structure/.cache/ | true",
-    "test": "yarn test:clean && yarn build && uvu test '.test.js'"
+    "test": "yarn build && uvu test '.test.js'"
   },
   "devDependencies": {
     "@babel/cli": "^7.6.2",
@@ -22,6 +21,7 @@
     "prettier": "^1.18.2",
     "react": "^16.10.2",
     "react-helmet": "^5.2.0",
+    "rimraf": "^3.0.2",
     "uvu": "^0.3.3"
   },
   "dependencies": {

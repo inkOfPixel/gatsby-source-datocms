@@ -13,9 +13,7 @@ module.exports = () => ({
       });
 
       const uploadDefaultFieldMetadata =
-        upload.entityPayload.attributes.default_field_metadata[
-          node.locale
-        ];
+        upload.entityPayload.attributes.default_field_metadata[node.locale];
 
       return {
         ...upload,

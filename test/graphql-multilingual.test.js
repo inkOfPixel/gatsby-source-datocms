@@ -2,11 +2,11 @@ const { suite } = require('uvu');
 const buildQueryExecutor = require('./support/buildQueryExecutor');
 const assertGraphQLResponseEqualToSnapshot = require('./support/assertGraphQLResponseEqualToSnapshot');
 
-const GraphQL = suite('gatsby-source-datocms');
+const GraphQLMultilingual = suite('GraphQL (Multilingual project)');
 
 let executeQuery;
 
-GraphQL.before(async () => {
+GraphQLMultilingual.before(async () => {
   executeQuery = await buildQueryExecutor('bb260a9bf12cccf24392dc68209a42');
 });
 
@@ -33,30 +33,30 @@ const assetFields = `
 
 const fileFields = `alt title customData ${assetFields}`;
 
-GraphQL('assets', async () => {
+GraphQLMultilingual('assets', async () => {
   assertGraphQLResponseEqualToSnapshot(
-    'png-asset',
+    'multilingual/png-asset',
     await executeQuery(
       `{ datoCmsAsset(originalId: {eq: "2637142"}) { ${assetFields} } }`,
     ),
   );
   assertGraphQLResponseEqualToSnapshot(
-    'mp4-asset',
+    'multilingual/mp4-asset',
     await executeQuery(
       `{ datoCmsAsset(originalId: {eq: "2637250"}) { ${assetFields} } }`,
     ),
   );
   assertGraphQLResponseEqualToSnapshot(
-    'csv-asset',
+    'multilingual/csv-asset',
     await executeQuery(
       `{ datoCmsAsset(originalId: {eq: "2637251"}) { ${assetFields} } }`,
     ),
   );
 });
 
-GraphQL('sortable collection', async () => {
+GraphQLMultilingual('sortable collection', async () => {
   assertGraphQLResponseEqualToSnapshot(
-    'sortable-position',
+    'multilingual/sortable-position',
     await executeQuery(`
     {
       datoCmsSecondaryModel(originalId: {eq: "7364459"}) {
@@ -67,9 +67,9 @@ GraphQL('sortable collection', async () => {
   );
 });
 
-GraphQL('tree collections', async () => {
+GraphQLMultilingual('tree collections', async () => {
   assertGraphQLResponseEqualToSnapshot(
-    'tree',
+    'multilingual/tree',
     await executeQuery(`
       {
         allDatoCmsHierarchical(filter: {root: {eq: true}, locale: {eq: "en"}}) {
@@ -103,7 +103,7 @@ GraphQL('tree collections', async () => {
   );
 });
 
-GraphQL('items', async () => {
+GraphQLMultilingual('items', async () => {
   const query = `
     {
       enArticle: datoCmsArticle(originalId: {eq: "7364344"}, locale: {eq: "en"}) {
@@ -360,7 +360,7 @@ GraphQL('items', async () => {
     }
   `;
 
-  assertGraphQLResponseEqualToSnapshot('item', await executeQuery(query));
+  assertGraphQLResponseEqualToSnapshot('multilingual/item', await executeQuery(query));
 });
 
-GraphQL.run();
+GraphQLMultilingual.run();

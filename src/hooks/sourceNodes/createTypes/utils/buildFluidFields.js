@@ -12,7 +12,7 @@ module.exports = () => {
       },
       maxHeight: 'Int',
       sizes: 'String',
-      imgixParams: 'DatoCmsImgixParams'
+      imgixParams: 'DatoCmsImgixParams',
     },
     resolve: (node, { maxWidth, maxHeight, imgixParams = {}, sizes }) => {
       const image = node.entityPayload.attributes;
@@ -70,4 +70,3 @@ module.exports = () => {
     sizes: field,
   };
 };
-

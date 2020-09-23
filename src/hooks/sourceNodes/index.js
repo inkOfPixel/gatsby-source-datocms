@@ -1,7 +1,6 @@
 const fs = require('fs-extra');
 const createNodeFromEntity = require('./createNodeFromEntity');
 const destroyEntityNode = require('./destroyEntityNode');
-const finalizeNodesCreation = require('./finalizeNodesCreation');
 const Queue = require('promise-queue');
 
 const { getClient, getLoader } = require('../../utils');
@@ -178,8 +177,7 @@ module.exports = async (
   });
 
   await loader.load();
-  // finalizeNodesCreation(context);
-  
+
   activity.end();
 
   const queue = new Queue(1, Infinity);
@@ -195,7 +193,6 @@ module.exports = async (
 
         await loadPromise;
 
-        finalizeNodesCreation(context);
         activity.end();
       });
     });
