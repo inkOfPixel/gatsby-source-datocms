@@ -4,8 +4,11 @@ const stringify = require('json-stringify-safe');
 module.exports = function updateDigest(node) {
   delete node.internal.owner;
 
+  const digest = node.digest;
+  delete node.digest;
+
   node.internal.contentDigest =
-    node.digest ||
+    digest ||
     crypto
       .createHash('md5')
       .update(stringify(node))
