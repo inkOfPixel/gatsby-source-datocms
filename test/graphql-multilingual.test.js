@@ -7,8 +7,7 @@ const GraphQL = suite('gatsby-source-datocms');
 let executeQuery;
 
 GraphQL.before(async () => {
-  executeQuery = await buildQueryExecutor();
-  console.log('FATTO');
+  executeQuery = await buildQueryExecutor('bb260a9bf12cccf24392dc68209a42');
 });
 
 const assetFields = `

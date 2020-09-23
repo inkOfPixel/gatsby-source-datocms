@@ -6,11 +6,11 @@ const { setStore } = require('gatsby-cli/lib/reporter/redux');
 const { GraphQLRunner } = require('gatsby/dist/query/graphql-runner');
 const path = require('path');
 
-module.exports = async function buildQueryExecutor() {
+module.exports = async function buildQueryExecutor(apiToken) {
   const gatsbyProjectPath = path.resolve(path.join(__dirname, '../fixtures/sample-gatsby-structure'));
   process.chdir(gatsbyProjectPath);
 
-  process.env.DATOCMS_API_TOKEN = 'bb260a9bf12cccf24392dc68209a42';
+  process.env.DATOCMS_API_TOKEN = apiToken;
 
   recipes.startGraphQLServer('.', true);
 
@@ -21,8 +21,6 @@ module.exports = async function buildQueryExecutor() {
       setStore,
     },
   });
-
-  console.log('FINE BOOTSTRAP');
 
   const runner = new GraphQLRunner(redux.store, { graphqlTracing: false });
 
