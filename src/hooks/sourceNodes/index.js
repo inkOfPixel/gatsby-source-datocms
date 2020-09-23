@@ -177,8 +177,12 @@ module.exports = async (
     destroyEntityNode(entity, context);
   });
 
+  console.log('CARICO -------------');
+
   await loader.load();
-  finalizeNodesCreation(context);
+  // finalizeNodesCreation(context);
+
+  console.log('FINITO -------------');
 
   activity.end();
 
