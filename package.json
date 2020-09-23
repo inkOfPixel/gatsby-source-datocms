@@ -8,7 +8,8 @@
     "build": "babel src --out-dir . --ignore __tests__",
     "watch": "babel -w src --out-dir . --ignore __tests__",
     "prepublish": "cross-env NODE_ENV=production npm run build",
-    "test": "yarn build && uvu test '.test.js'"
+    "test:clean": "rm -rf test/fixtures/sample-gatsby-structure/.cache/ | true",
+    "test": "yarn test:clean && yarn build && uvu test '.test.js'"
   },
   "devDependencies": {
     "@babel/cli": "^7.6.2",
