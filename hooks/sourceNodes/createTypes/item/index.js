@@ -120,7 +120,6 @@ module.exports = function (_ref) {
               value: {
                 type: _type,
                 resolve: function resolve(node, args, context) {
-                  node.id = "".concat(_type, "-").concat(node.entityPayload.id, "-").concat(node.locale);
                   var i18n = {
                     locale: node.locale,
                     fallbacks: localeFallbacks
@@ -133,6 +132,7 @@ module.exports = function (_ref) {
               valueNode: {
                 type: nodeType,
                 resolve: function resolve(node, args, context) {
+                  node.id = "".concat(_type, "-").concat(node.entityPayload.id, "-").concat(node.locale);
                   var i18n = {
                     locale: node.locale,
                     fallbacks: localeFallbacks
