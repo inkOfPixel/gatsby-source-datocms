@@ -2,7 +2,6 @@
 /.yalc.lock
 /index.js
 /gatsby-node.js
-/hooks
 /old
 /node_modules
 /utils.js
