@@ -108,6 +108,7 @@ module.exports = ({ entitiesRepo, localeFallbacks, actions, schema, generateType
                 value: {
                   type,
                   resolve: (node, args, context) => {
+                    node.id = `${type}-${node.entityPayload.id}-${node.locale}`;
                     const i18n = {
                       locale: node.locale,
                       fallbacks: localeFallbacks,
