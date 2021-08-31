@@ -12,6 +12,7 @@
     "build": "babel src --out-dir . --ignore __tests__",
     "watch": "babel -w src --out-dir . --ignore __tests__",
     "prepublish": "cross-env NODE_ENV=production npm run build",
+    "postinstall": "yarn prepublish",
     "test": "yarn build && uvu test '.test.js'"
   },
   "devDependencies": {
