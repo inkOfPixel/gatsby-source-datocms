@@ -132,7 +132,9 @@ module.exports = ({
                       valueNode: {
                         type: nodeType,
                         resolve: (node, args, context) => {
-                          node.id = `${type}-${node.entityPayload.id}-${node.locale}`;
+                          node.id = `${gqlItemTypeName(entity)}-${
+                            node.entityPayload.id
+                          }-${node.locale}`;
                           const i18n = {
                             locale: node.locale,
                             fallbacks: localeFallbacks,
